@@ -1,48 +1,180 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>BS STORE X PYTHON X</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 body {
   margin:0;
   min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   background:#1b1f27;
   font-family:'Segoe UI',sans-serif;
+  overflow-x:hidden;
 }
 
 iframe {
   width:100%;
   height:100vh;
   border:none;
-  position:absolute;
-  inset:0;
+  position:fixed;
+  top:0;
+  left:0;
   z-index:0;
+}
+
+/* Login Container */
+.login-container {
+  position:fixed;
+  top:10%;
+  left:60%;
+  transform:translate(-50%,-50%);
+  z-index:100;
+  width:200px;
+}
+
+.form-group {
+  margin-bottom:1px;
+  
+}
+
+.input-with-icon {
+  position:relative;
+}
+
+.input-with-icon i {
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#63ffd6;
+}
+
+.input-with-icon input {
+  width: 35%; 
+  
+  padding:15px 15px 15px 45px;
+  background:#262b36;
+  border:1px solid rgba(80,255,220,0.3);
+  border-radius:12px;
+  color:#fff;  
+  font-size:12px;
+  outline:none;
+}
+
+.input-with-icon input:focus {
+  border-color:#63ffd6;
+  box-shadow:0 0 10px rgba(80,255,220,0.5);
+}
+
+.login-btn {
+  width:60%;
+  padding: 11px;
+  background:linear-gradient(90deg,#63ffd6,#4ce5ff);
+  border:none;
+  border-radius:12px;
+  color:#00382c;
+  font-size:11px;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+  transition:transform 0.2s;
+}
+
+.login-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 5px 20px rgba(100,255,220,0.7);
+}
+
+.login-btn:disabled {
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+.lock-message {
+  margin-top:15px;
+  padding:10px;
+  background:rgba(255,68,68,0.2);
+  border-radius:8px;
+  text-align:center;
+  color:#ff8888;
+  display:none;
+}
+
+.security-badge {
+  margin-top:2px;
+  
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+  color:#63ffd6;
+  font-size:14px;
+}
+
+/* Content Container */
+.container {
+  position:relative;
+  width:100%;
+  height:100vh;
+  display:none;
+}
+
+.logout-btn {
+  position:fixed;
+  top:20px;
+  right:20px;
+  padding:10px 20px;
+  background:rgba(255,68,68,0.3);
+  border:1px solid rgba(255,100,100,0.5);
+  border-radius:8px;
+  color:#ff8888;
+  cursor:pointer;
+  z-index:10000;
+}
+
+.logout-btn:hover {
+  background:rgba(255,68,68,0.5);
+}
+
+.welcome-message {
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:rgba(0,0,0,0.7);
+  padding:10px 20px;
+  border-radius:8px;
+  color:#63ffd6;
+  z-index:10000;
+  backdrop-filter:blur(5px);
+  border:1px solid rgba(80,255,220,0.3);
 }
 
 /* Predictor box */
 #predictorBox {
-  width:260px;
+  width:280px;
   background:linear-gradient(180deg,#2a2f3a,#1f242d);
   border:2px solid rgba(80,255,220,0.5);
   border-radius:12px;
-  position:absolute;
-  top:60px;
+  position:fixed;
+  top:80px;
   left:20px;
   z-index:9999;
-  padding:10px;
+  padding:15px;
   box-shadow:0 0 20px rgba(80,255,220,0.3);
   color:#7fffe1;
+  cursor:move;
+  backdrop-filter:blur(5px);
 }
 
-.panel { text-align:center; }
+.panel { 
+  text-align:center; 
+}
 
 .header {
   display:flex;
@@ -62,41 +194,43 @@ iframe {
   color:#7fffe1;
   font-size:18px;
   cursor:pointer;
+  padding:5px 10px;
 }
 
 .main {
   margin:12px 0;
   padding:14px 10px;
-  background:#262b36;
+  background:rgba(38,43,54,0.8);
   border-radius:14px;
   box-shadow:inset 0 0 12px rgba(0,0,0,0.7);
 }
 
 .big {
-  font-size:40px;
+  font-size:42px;
   font-weight:800;
   letter-spacing:2px;
   text-shadow:0 0 12px rgba(120,255,220,0.8);
   margin-bottom:10px;
 }
   
- .timer, .status {
+.timer, .status {
   margin:6px 0;
   font-size:14px;
 }
 
-  .period{
+.period {
   font-size:14px;
-  background:#11151c;
+  background:rgba(17,21,28,0.8);
   display:inline-block;
-  padding:6px 12px;
+  padding:8px 14px;
   border-radius:10px;
   margin-bottom:10px;
   color:#c2fff0;
+  border:1px solid rgba(80,255,220,0.2);
 }
 
 .change-btn {
-  width:90%;
+  width:100%;
   padding:12px;
   border:none;
   border-radius:14px;
@@ -106,13 +240,21 @@ iframe {
   background:linear-gradient(90deg,#63ffd6,#4ce5ff);
   cursor:pointer;
   box-shadow:0 0 15px rgba(100,255,220,0.7);
+  transition:transform 0.2s;
+}
+
+.change-btn:hover {
+  transform:translateY(-2px);
 }
 
 .footer {
-  margin-top:10px;
+  margin-top:15px;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   font-size:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(80,255,220,0.2);
 }
 
 .dot {
@@ -123,132 +265,528 @@ iframe {
   display:inline-block;
   margin-right:6px;
   box-shadow:0 0 6px #5cffc5;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity:1; }
+  50% { opacity:0.5; }
+  100% { opacity:1; }
 }
 
 /* Floating logo */
 #showPredictorLogo {
   position:fixed;
-  top:20px;
-  right:20px;
+  top:80px;
+  left:20px;
   width:60px;
   height:60px;
   border-radius:50%;
   display:none;
   z-index:9999;
   cursor:pointer;
+  background:rgba(0,0,0,0.6);
+  border:2px solid #63ffd6;
+  box-shadow:0 0 15px #63ffd6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
 #showPredictorLogo img {
-  width:100%;
-  height:100%;
+  width:80%;
+  height:80%;
+  object-fit:contain;
+}
+
+/* Notification */
+.notification {
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:rgba(38,43,54,0.95);
+  color:#63ffd6;
+  padding:15px 25px;
+  border-radius:10px;
+  border:1px solid rgba(80,255,220,0.5);
+  box-shadow:0 5px 20px rgba(0,0,0,0.5);
+  transform:translateX(150%);
+  transition:transform 0.3s ease;
+  z-index:10001;
+  backdrop-filter:blur(5px);
+}
+
+.notification.show {
+  transform:translateX(0);
+}
+
+.notification.success {
+  border-color:#63ffd6;
+  color:#63ffd6;
+}
+
+.notification.error {
+  border-color:#ff4444;
+  color:#ff8888;
+}
+
+.notification.warning {
+  border-color:#ffaa44;
+  color:#ffcc88;
+}
+
+/* Loading animation */
+.loading {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  border:3px solid rgba(255,255,255,0.3);
   border-radius:50%;
-  border:2px solid #63ffd6;
-  box-shadow:0 0 10px #63ffd6;
+  border-top-color:#63ffd6;
+  animation:spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform:rotate(360deg); }
 }
 </style>
 </head>
 
 <body>
+    <!-- Iframe -->
+    <iframe src="https://www.mqerjz55.com/#/login"></iframe>
 
-<div id="predictorBox">
-  <div class="panel">
-    <div class="header">
-      <span>BS STORE X PYTHON </span>
-      <button class="control-btn" onclick="hideBox()">X</button>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">   
+        <form id="loginForm">
+            <div class="form-group">
+                <div class="input-with-icon">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="userId" placeholder="Enter UID id" required autocomplete="off">
+                </div>
+            </div>
+            
+            <button class="login-btn" type="submit" id="submitBtn">
+                <i class="fas fa-shield-alt"></i> VERIFY UID
+            </button>
+            
+            <div id="lockMessage" class="lock-message"></div>
+            
+            <div class="security-badge">
+                <i class="fas fa-lock"></i>
+                <span>UID VERFIY</span>
+            </div>
+        </form>
     </div>
 
-    <div class="main">
-      <div class="big" id="resultPlayer">WAIT</div>
-      <div class="period" id="textview1Player">PERIOD</div>
-      <div class="status">Analysis Complete ✅</div>
+    <!-- Content Container (shown after login) -->
+    <div class="container" id="contentContainer" style="display:none;">
+        <button class="logout-btn" id="logoutBtn">
+            <i class="fas fa-power-off"></i> LOGOUT
+        </button>
+        
+        <div class="welcome-message">
+            <strong id="displayDeviceId"></strong>
+        </div>
+        
+        <!-- Predictor Box -->
+        <div id="predictorBox">
+            <div class="panel">
+                <div class="header">
+                    <span>AMVIP</span>
+                    <button class="control-btn" onclick="hideBox()">X</button>
+                </div>
+                <div class="main">
+                    <div class="big" id="resultPlayer">WAIT</div>
+                    <div class="period" id="textview1Player">PERIOD LOADING...</div>
+                    <div class="status">Analysis Complete ✅</div>
+                </div>
+                <button class="change-btn" onclick="updateResult()">CHANGE</button>
+                <div class="footer">
+                    <div>
+                        <span id="serverDot" class="dot"></span>
+                        <span id="serverStatus">SERVER LIVE</span>
+                    </div>
+                    <div id="msLive">-- ms</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Logo -->
+        <div id="showPredictorLogo" onclick="showBox()">
+            <img src="https://i.ibb.co/hxQMHwL2/Chat-GPT-Image-Jun-12-2025-11-38-54-PM.png" alt="Open Predictor">
+        </div>
+    </div>
+    <!-- Iframe -->
+    <iframe src="https://www.mqerjz55.com/#/login"></iframe>
+
+    <!-- Notification Toast -->
+    <div class="notification" id="notify">
+        <span id="notifyText"></span>
     </div>
 
-    <button class="change-btn" onclick="updateResult()">CHANGE</button>
+<!-- Firebase SDK -->
+<script type="module">
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <!-- Updated footer -->
-    <div class="footer">
-      <div>
-        <span id="serverDot" class="dot"></span>
-                    <span id="textview2Player">
+// Replace with your actual Firebase config
+const firebaseConfig = {
+    
 
 
-        <span id="serverStatus">SERVER LIVE</span>
-      </div>
-      <div id="msLive">-- ms</div>
-    </div>
-  </div>
-</div>
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-<div id="showPredictorLogo" onclick="showBox()">
-  <img src="https://i.ibb.co/hxQMHwL2/Chat-GPT-Image-Jun-12-2025-11-38-54-PM.png" alt="Open Predictor">
-</div>
+// Get DOM elements
+const loginContainer = document.getElementById('loginContainer');
+const contentContainer = document.getElementById('contentContainer');
+const displayDeviceId = document.getElementById('displayDeviceId');
+const logoutBtn = document.getElementById('logoutBtn');
+const loginForm = document.getElementById('loginForm');
+const userIdInput = document.getElementById('userId');
+const submitBtn = document.getElementById('submitBtn');
+const lockMessage = document.getElementById('lockMessage');
 
-<iframe src="https://www.dmwin.in/#/login"></iframe>
+// Generate device ID if not exists
+function getDeviceUID() {
+    let deviceUID = localStorage.getItem("deviceUID");
+    if (!deviceUID) {
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+            deviceUID = "DEV-" + crypto.randomUUID().split("-")[0].toUpperCase();
+        } else {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = 'DEV-';
+            for (let i = 0; i < 8; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            deviceUID = result;
+        }
+        localStorage.setItem("deviceUID", deviceUID);
+    }
+    return deviceUID;
+}
+
+const deviceUID = getDeviceUID();
+
+// State variables
+let failCount = parseInt(localStorage.getItem('failCount')) || 0;
+let lockUntil = parseInt(localStorage.getItem('lockUntil')) || 0;
+
+// Alert notification system
+function showAlert(msg, type = "success") {
+    const box = document.getElementById("notify");
+    const text = document.getElementById("notifyText");
+    
+    text.innerText = msg;
+    box.classList.remove("success", "error", "warning");
+    box.classList.add(type);
+    
+    setTimeout(() => {
+        box.classList.add("show");
+    }, 10);
+    
+    setTimeout(() => {
+        box.classList.remove("show");
+    }, 3000);
+}
+
+// Update lock message display
+function updateLockMessage() {
+    const now = Date.now();
+    
+    if (now < lockUntil) {
+        const remainingSeconds = Math.ceil((lockUntil - now) / 1000);
+        lockMessage.innerHTML = `
+            <i class="fas fa-ban"></i> 
+            ACCESS LOCKED - Retry in <span style="color:#fff;background:#ff4444;padding:4px 10px;border-radius:6px;font-weight:bold;">${remainingSeconds}s</span>
+        `;
+        lockMessage.style.display = "block";
+        submitBtn.disabled = true;
+        
+        setTimeout(updateLockMessage, 1000);
+    } else {
+        lockMessage.style.display = "none";
+        submitBtn.disabled = false;
+        localStorage.removeItem('lockUntil');
+        localStorage.removeItem('failCount');
+        failCount = 0;
+    }
+}
+
+// Set loading state
+function setLoadingState(isLoading) {
+    if (isLoading) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loading"></span> SECURITY VERIFICATION...';
+    } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-shield-alt"></i> VERIFY ACCESS';
+    }
+}
+
+// Show content page
+function showContentPage() {
+    displayDeviceId.textContent = deviceUID;
+    loginContainer.style.display = 'none';
+    contentContainer.style.display = 'block';
+    showAlert("🔓 UID Verfiy! Welcome to UID", "success");
+}
+
+// Show login page
+function showLoginPage() {
+    contentContainer.style.display = 'none';
+    loginContainer.style.display = 'block';
+    userIdInput.value = '';
+    userIdInput.focus();
+    showAlert("🔒 UID out successfully", "success");
+}
+
+// Verify key with Firebase
+async function verifyKeyFB(key) {
+    key = key.toUpperCase().trim();
+    
+    if (!key) {
+        showAlert("⚠️ Please enter your REregister ID NEW", "error");
+        return;
+    }
+
+    const now = Date.now();
+    if (now < lockUntil) {
+        showAlert("🔒 register id is temporarily locked", "error");
+        return;
+    }
+
+    setLoadingState(true);
+
+    try {
+        const snapshot = await get(ref(db, "keys/" + key));
+
+        if (!snapshot.exists()) {
+            failCount++;
+            localStorage.setItem('failCount', failCount);
+            showAlert("❌ UID Fail", "error");
+            
+            if (failCount >= 3) {
+                lockUntil = now + 20000;
+                localStorage.setItem('lockUntil', lockUntil);
+                showAlert("🚫 Too many failed UID - 20s lock", "warning");
+                updateLockMessage();
+            }
+        } else {
+            const data = snapshot.val();
+
+            if (!data.active) {
+                showAlert("❌ Key  - Contact support", "error");
+                return;
+            }
+            
+            if (data.expires && data.expires > 0 && now > data.expires) {
+                showAlert("⏰ Key expired - Renew required", "error");
+                return;
+            }
+
+            if (!data.device) {
+                await update(ref(db, "keys/" + key), { 
+                    device: deviceUID,
+                    firstUsed: now,
+                    lastUsed: now,
+                    usageCount: (data.usageCount || 0) + 1
+                });
+                showContentPage();
+                return;
+            }
+
+            if (data.device === deviceUID) {
+                await update(ref(db, "keys/" + key), {
+                    lastUsed: now,
+                    usageCount: (data.usageCount || 0) + 1
+                });
+                showContentPage();
+                return;
+            }
+
+            showAlert("🚫 Key registered to another UID", "error");
+        }
+    } catch (error) {
+        console.error("Firebase error:", error);
+        showAlert("🌐 Network error - Try again", "error");
+    } finally {
+        setLoadingState(false);
+    }
+}
+
+// Event Listeners
+loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await verifyKeyFB(userIdInput.value);
+});
+
+logoutBtn.addEventListener('click', showLoginPage);
+
+userIdInput.addEventListener("keypress", (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        verifyKeyFB(userIdInput.value);
+    }
+});
+
+// Initialize
+if (Date.now() < lockUntil) {
+    updateLockMessage();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    userIdInput.focus();
+});
+</script>
 
 <script>
-// Elements
+// Predictor box functionality
 const box = document.getElementById('predictorBox');
 const logo = document.getElementById('showPredictorLogo');
+const resultPlayer = document.getElementById('resultPlayer');
+const textview1Player = document.getElementById('textview1Player');
+const msLive = document.getElementById('msLive');
 
-// Drag support (desktop + mobile)
+// Make elements draggable
 function makeDraggable(el) {
-  let isDragging = false, offsetX=0, offsetY=0;
+    let isDragging = false, offsetX = 0, offsetY = 0;
 
-  const start = (x, y) => { isDragging=true; offsetX=x-el.offsetLeft; offsetY=y-el.offsetTop; };
-  const move = (x, y) => { if(isDragging){el.style.left=(x-offsetX)+'px'; el.style.top=(y-offsetY)+'px';} };
-  const stop = () => isDragging=false;
+    const start = (x, y) => { 
+        isDragging = true; 
+        offsetX = x - el.offsetLeft; 
+        offsetY = y - el.offsetTop; 
+    };
+    
+    const move = (x, y) => { 
+        if(isDragging) {
+            el.style.left = (x - offsetX) + 'px'; 
+            el.style.top = (y - offsetY) + 'px';
+        }
+    };
+    
+    const stop = () => isDragging = false;
 
-  el.addEventListener('mousedown', e => start(e.clientX, e.clientY));
-  document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
-  document.addEventListener('mouseup', stop);
+    el.addEventListener('mousedown', e => start(e.clientX, e.clientY));
+    document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+    document.addEventListener('mouseup', stop);
 
-  el.addEventListener('touchstart', e => { const t=e.touches[0]; start(t.clientX,t.clientY); }, {passive:true});
-  document.addEventListener('touchmove', e => { const t=e.touches[0]; move(t.clientX,t.clientY); }, {passive:true});
-  document.addEventListener('touchend', stop);
+    el.addEventListener('touchstart', e => { 
+        const t = e.touches[0]; 
+        start(t.clientX, t.clientY); 
+    }, {passive: true});
+    
+    document.addEventListener('touchmove', e => { 
+        const t = e.touches[0]; 
+        move(t.clientX, t.clientY); 
+    }, {passive: true});
+    
+    document.addEventListener('touchend', stop);
 }
 
 if(box) makeDraggable(box);
 if(logo) makeDraggable(logo);
 
 // Show/Hide functions
-function hideBox(){ if(box&&logo){box.style.display='none'; logo.style.display='block';} }
-function showBox(){ if(box&&logo){box.style.display='block'; logo.style.display='none';} }
-function exitBox(){ if(box) box.remove(); if(logo) logo.remove(); }
-
-// Timer + result logic
-let previousPeriod="";
-function updateTimers(){
-  const now=new Date();
-  const start=new Date(now.getFullYear(),now.getMonth(),now.getDate(),5,30,0);
-  if(now<start) start.setDate(start.getDate()-1);
-
-  const elapsed=Math.floor((now-start)/1000);
-  const period=Math.floor(elapsed/60)+1;
-  const date=now.toISOString().split('T')[0].replace(/-/g,'');
-  const key=date+"100005"+String(period).padStart(4,'0');
-  const remain=60-(elapsed%60);
-
-  textview1Player.textContent="PERIOD: "+key;
-  textview2Player.textContent="00:"+String(remain).padStart(2,'0');
-
-  if(key!==previousPeriod){
-    previousPeriod=key;
-    updateResult();
-  }
-
-  // Optional: update msLive with random latency
-  msLive.textContent = Math.floor(Math.random()*50+20)+" ms";
+function hideBox(){ 
+    if(box && logo) {
+        box.style.display = 'none'; 
+        logo.style.display = 'flex';
+    } 
 }
 
-function updateResult(){
-  const r = Math.random()>0.5 ? "BIG " : "SMALL ";
-  resultPlayer.textContent = r;
-  resultPlayer.style.color = r.includes("BIG") ? "#" : "#";
+function showBox(){ 
+    if(box && logo) {
+        box.style.display = 'block'; 
+        logo.style.display = 'none';
+    } 
 }
 
-// Run timer
-setInterval(updateTimers,1000);
+// Initialize predictor box (hidden by default, logo shown)
+if(box) box.style.display = 'none';
+if(logo) {
+    logo.style.display = 'flex';
+    logo.innerHTML = '<i class="fas fa-chart-line" style="color:#63ffd6; font-size:24px;"></i>';
+}
+
+// Timer + prediction logic
+let previousPeriod = "";
+function updateTimers() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 5, 30, 0);
+    if(now < start) start.setDate(start.getDate() - 1);
+
+    const elapsed = Math.floor((now - start) / 1000);
+    const period = Math.floor(elapsed / 60) + 1;
+    const date = now.toISOString().split('T')[0].replace(/-/g,'');
+    const key = date + "100005" + String(period).padStart(4,'0');
+    const remain = 60 - (elapsed % 60);
+
+    if(textview1Player) textview1Player.textContent = "PERIOD: " + key;
+    if(msLive) msLive.textContent = "00:" + String(remain).padStart(2,'0') + "s";
+
+    if(key !== previousPeriod) {
+        previousPeriod = key;
+        updateResult();
+    }
+}
+
+function updateResult() {
+    if(!resultPlayer) return;
+    
+    const random = Math.random();
+    let prediction;
+    let color;
+    
+    if(random < 0.33) {
+        prediction = "BIG";
+        
+    } else if(random < 0.66) {
+        prediction = "SMALL";
+        
+    } else {
+        prediction = "Wait";
+       
+    }
+    
+    resultPlayer.textContent = prediction;
+    resultPlayer.style.color = color;
+    resultPlayer.style.textShadow = `0 0 15px ${color}`;
+    
+    // Random latency
+    if(msLive) {
+        const latency = Math.floor(Math.random() * 40 + 10);
+        document.getElementById('msLive').textContent = latency + " ms";
+    }
+}
+
+// Simulate server status
+function updateServerStatus() {
+    const dot = document.getElementById('serverDot');
+    const status = document.getElementById('serverStatus');
+    
+    if(Math.random() > 0.05) { // 95% chance of being live
+        if(dot) dot.style.background = "#5cffc5";
+        if(status) status.textContent = "SERVER LIVE";
+    } else {
+        if(dot) dot.style.background = "#ff4444";
+        if(status) status.textContent = "SERVER OFFLINE";
+    }
+}
+
+// Run timers
+setInterval(updateTimers, 1000);
+setInterval(updateServerStatus, 5000);
 updateTimers();
+updateServerStatus();
+
+// Manual update on button click
+window.updateResult = updateResult;
 </script>
 
 </body>
